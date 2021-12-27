@@ -5,7 +5,7 @@
 
 
 
-.definelabel PAYLOAD_ROM, 		0x00C00000
+.definelabel PAYLOAD_ROM, 		0x00D00000
 .definelabel PAYLOAD_RAM, 		0x80400000
 .definelabel DMA_FUNC,    		0x80001158
 .definelabel RAM_END,           org(EndRAMData)
@@ -26,12 +26,37 @@
 .org 0xBFFFFC
 .word 0xF00000
 
+
+.org 0x095D60
+NOP
+.org 0x09F8C4
+NOP
+
+
+.org 0x11C884
+NOP
+.org 0x11C890
+NOP
+
+.org 0x00158C
+NOP
+
+.org 0xF1750
+.word 0x1F0B1529
+.word 0x200C182C
 .org 0x113FBA
 .halfword 0x8080
 .org 0x113FCE
 .byte 0x00
 
 
+.org 0x0A5A84
+LI $S3, 2
+.org 0x0A49BC
+LI $S3, 2
+
+//.org 0x0B10C0
+//NOP
 
 .if OKBuild
 //fix the flip and stop that shit
@@ -442,6 +467,8 @@ NOP
 .align 0x10
 .importobj "ModelData.o"
 .align 0x10
+.importobj "Presents.o"
+.align 0x10
 .importobj "Main.o"
 .align 0x10
 .importobj "Protec.o"
@@ -538,7 +565,9 @@ CollisionHopTable:
 .word 0x802A09B0, 0x802A09B0, 0x802A09B0, 0x802A09B0
 .word 0x802A09B0, 0x802A09B0, 0x802A09B0, 0x802A09B0 //99
 
-
+Splash:
+.import "data\SplashLogo\output\Splash.bin"
+.align 0x10
 
 EndRAMData:
 
@@ -558,8 +587,13 @@ Crash:
 .align 0x10
 CrashEnd:
 LogoROM:
-.import "data\\ModelData\\Logo\\Logo.bin" ;; 0xD388
+.import "data\ChristmasLogo\ChristmasLogo.bin" ;; 0xD388
 .align 0x10
+
+ROMPresents:
+.import "data\Presents\Presents.bin"
+.align 0x10
+ROMPresentsEnd:
 
 RCSpriteROM:
 .import "data\\RedCoinSprite16.png.MIO0" ;; 0x4F0
@@ -581,7 +615,9 @@ ModelDataStart:
 .align 0x10
 ModelDataEnd:
 
-
+NiceFontROM:
+.import "..\Library\data\nice_font.mio0.bin"
+.align 0x10
 
 
 .org 0xEFFFFC
